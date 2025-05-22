@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <vector>
-
+#include <iostream>
 namespace crc
 {
 constexpr static uint8_t CRC8_TABLE[256] =
