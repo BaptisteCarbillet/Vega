@@ -1,0 +1,3 @@
+[submodule "robomaster_sdk_can"]
+	path = robomaster_sdk_can
+	url = https://github.com/proroklab/robomaster_sdk_can.git
