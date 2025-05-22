@@ -2,7 +2,8 @@
 
 #include <protocol.hpp>
 #include <dds.hpp>
-
+namespace robomaster
+{
 namespace command
 {
 class gimbal
@@ -32,12 +33,7 @@ public:
         pkg.write_to(_io);
     }
 
-    void send_speed(float vx, float vy, float omega)
-    {
-        robomaster::package pkg{0xC9, 0xC3, 0x3f, 0x21, false, false};
-        pkg << vx << vy << omega;
-        pkg.write_to(_io);
-    }
+    
 
 private:
     std::iostream& _io;
@@ -45,4 +41,4 @@ private:
 
 }
 
-
+}
