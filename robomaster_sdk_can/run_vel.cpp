@@ -13,7 +13,7 @@
 
 int main(int, char**)
 {
-    auto can = can_streambuf("can0", 0x201);
+    auto can = can_streambuf("can0", 0x200);
     std::iostream io(&can);
     robomaster::command::chassis chassis(io);
 
@@ -22,7 +22,7 @@ int main(int, char**)
     while (true)
     {
         chassis.send_heartbeat();
-        chassis.send_wheel_speed(30, 0, 0, 0);
+        chassis.send_wheel_speed(30, 30, 30, 30);
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
