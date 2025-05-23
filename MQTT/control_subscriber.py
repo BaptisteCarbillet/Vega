@@ -1,5 +1,8 @@
 import paho.mqtt.client as mqtt #import library
 import os
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BIN_PATH = os.path.join(SCRIPT_DIR, '../robomaster_sdk_can/')
+
 
 MQTT_SERVER = "argus.paris.inria.fr" #specify the broker address
 MQTT_PATH = "mqtt/control" #this is the name of topic
@@ -14,10 +17,10 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     command = msg.payload.decode('utf-8')
     if command == 'STOP':
-        os.system('../robomaster_sdk_can/./stop_wheel')
+        os.system(BIN_PATH + './stop_wheel')
     elif command == 'FORWARD':
         
-        os.system('../robomaster_sdk_can/./mv_wheel 30 30 30 30')
+        os.system(BIN_PATH + './mv_wheel 30 30 30 30')
 
  
 client = mqtt.Client()
