@@ -31,6 +31,22 @@ int main(int argc, char* argv[])
 
     chassis.send_workmode(1);
 
-    chassis.send_wheel_speed(fr_rpm, fl_rpm, bl_rpm, br_rpm);
+    std::cout << fr_rpm << " " << fl_rpm << " " << bl_rpm << " " << br_rpm << std::endl;
+    auto start = std::chrono::high_resolution_clock::now();
+    while (true)
+    {
+    
+        chassis.send_wheel_speed(fr_rpm, fl_rpm, bl_rpm, br_rpm);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        auto now = std::chrono::high_resolution_clock::now();
+        auto delta = std::chrono::duration_cast<std::chrono::milliseconds>(now - start);
+        if (delta.count() > 20)
+        {
+            
+            break;
+        }
+    }
+    
+    
     return 0;
 }
