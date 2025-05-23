@@ -11,6 +11,8 @@ MQTT_PATH = "mqtt/control" #this is the name of topic
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe(MQTT_PATH)
+    os.system(BIN_PATH + './center_gimbal')
+
  
 
 def on_message(client, userdata, msg):
