@@ -7,7 +7,7 @@ BIN_PATH = os.path.join(SCRIPT_DIR, '../robomaster_sdk_can/')
 MQTT_SERVER = "argus.paris.inria.fr" #specify the broker address
 MQTT_PATH = "mqtt/control" #this is the name of topic
 
-# The callback for when the client receives a CONNACK response from the server.
+
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
     client.subscribe(MQTT_PATH)
