@@ -13,21 +13,25 @@ def on_press(key):
             #mv_wheel x -x -x x
             mqttc.publish("mqtt/control", "FORWARD", qos=1)
             
-        if key.char == 'y':
-            #mv_wheel -x x x -x
-            keyboard_controller.type('Hello')
-            pass
+        elif key.char == 's':
+            #stop_wheel
+            mqttc.publish("mqtt/control", "STOP", qos=1)
+
+        elif key.char == 'g':
+            #mv_wheel -x -x -x -x
+            mqttc.publish("mqtt/control", "BACKWARD", qos=1)
         elif key.char == 'h':
             #mv_wheel -x x -x x
-            pass
+            mqttc.publish("mqtt/control", "RIGHT", qos=1)
         elif key.char == 'f':
             #mv_wheel x -x x -x
-            # Simulate pressing Enter
-            pass
-            keyboard_controller.press(keyboard.Key.enter)
-            keyboard_controller.release(keyboard.Key.enter)
-        elif key.char == 's':
-            mqttc.publish("mqtt/control", "STOP", qos=1)
+            mqttc.publish("mqtt/control", "LEFT", qos=1)
+        elif key.char == 'y':
+            #mv_wheel -x x x -x
+            mqttc.publish("mqtt/control", "ROTATION_RIGHT", qos=1)
+        elif key.char == 'r':
+            #mv_wheel x -x -x x
+            mqttc.publish("mqtt/control", "ROTATION_LEFT", qos=1)
     except AttributeError:
         pass  # Special keys (like shift) won't have .char
 

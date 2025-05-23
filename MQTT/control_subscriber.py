@@ -19,8 +19,20 @@ def on_message(client, userdata, msg):
     if command == 'STOP':
         os.system(BIN_PATH + './stop_wheel')
     elif command == 'FORWARD':
-        
         os.system(BIN_PATH + './mv_wheel 30 30 30 30')
+    elif command == 'BACKWARD':
+        os.system(BIN_PATH + './mv_wheel -30 -30 -30 -30')
+    elif command == 'RIGHT':
+        os.system(BIN_PATH + './mv_wheel -30 30 -30 30')
+    elif command == 'LEFT':
+        os.system(BIN_PATH + './mv_wheel 30 -30 30 -30')
+    elif command == 'ROTATION_RIGHT':
+        os.system(BIN_PATH + './mv_wheel -30 30 30 -30')
+    elif command == 'ROTATION_LEFT':
+        os.system(BIN_PATH + './mv_wheel 30 -30 -30 30')
+    else:
+        
+        pass
 
  
 client = mqtt.Client()
