@@ -1,9 +1,11 @@
 # VEGA
 
 
-This repository contains the code to program and control the DJI RoboMaster S1.
+This repository contains code to program and control the DJI RoboMaster S1.
 
+NB : the robomaster_sdk_can folder is directly taken from the GitHub of  [proroklab](https://github.com/proroklab/robomaster_sdk_can/tree/main)
 
+It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 
 ## Materials needed
 
