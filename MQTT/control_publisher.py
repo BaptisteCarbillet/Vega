@@ -32,6 +32,10 @@ def on_press(key):
         elif key.char == 'r':
             #mv_wheel x -x -x x
             mqttc.publish("mqtt/control", "ROTATION_LEFT", qos=1)
+        if key.char == 'a':
+            mqttc.publish("mqtt/control", "DECREASE_SPEED", qos=1)
+        if key.char == 'd':
+            mqttc.publish("mqtt/control", "INCREASE_SPEED", qos=1)
     except AttributeError:
         pass  # Special keys (like shift) won't have .char
 
