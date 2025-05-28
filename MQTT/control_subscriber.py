@@ -29,17 +29,17 @@ def on_message(client, userdata, msg):
     if command == 'STOP':
         subprocess.Popen([BIN_PATH + './stop_wheel'],shell=True)
     elif command == 'FORWARD':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} {} {} {}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel {} {} {} {}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'BACKWARD':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} -{} -{} -{}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel -{} -{} -{} -{}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'RIGHT':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} -{} {}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} -{} {}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'LEFT':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} {} -{}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} {} -{}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'ROTATION_RIGHT':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} {} -{}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} {} -{}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'ROTATION_LEFT':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} -{} {}'.format(speed)],shell=True)
+        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} -{} {}'.format(speed,speed,speed,speed)],shell=True)
     elif command == 'INCREASE_SPEED':
         speed += 10
         
