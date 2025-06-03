@@ -37,19 +37,19 @@ def on_press(key):
             mqttc.publish("mqtt/control", "DECREASE_SPEED", qos=1)
         elif key.char == 'd':
             mqttc.publish("mqtt/control", "INCREASE_SPEED", qos=1)
-        elif key == Key.right:
+        elif key.char == 'l':
             #mv_gimbal x 0 
             mqttc.publish("mqtt/control", "RIGHT_GIMBAL", qos=1)
-        elif key == Key.left:
+        elif key.char == 'j':
             #mv_gimbal -x 0
             mqttc.publish("mqtt/control", "LEFT_GIMBAL", qos=1)
-        elif key == Key.up:
+        elif key.char == 'i':
             #mv_gimbal 0 x
             mqttc.publish("mqtt/control", "UP_GIMBAL", qos=1)
-        elif key == Key.down:
+        elif key.char == 'k':
             #mv_gimbal 0 -x
             mqttc.publish("mqtt/control", "DOWN_GIMBAL", qos=1)
-        elif key == Key.shift_r:
+        elif key.char == 'z':
             # center_gimbal
             mqttc.publish("mqtt/control", "CENTER_GIMBAL", qos=1)
     except AttributeError:
