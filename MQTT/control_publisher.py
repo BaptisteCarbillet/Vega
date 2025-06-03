@@ -1,5 +1,6 @@
 from pynput import keyboard
 from pynput.keyboard import Controller
+from pynput.keyboard import Key
 import time
 import paho.mqtt.client as mqtt
 
@@ -32,10 +33,25 @@ def on_press(key):
         elif key.char == 'r':
             #mv_wheel x -x -x x
             mqttc.publish("mqtt/control", "ROTATION_LEFT", qos=1)
-        if key.char == 'a':
+        elif key.char == 'a':
             mqttc.publish("mqtt/control", "DECREASE_SPEED", qos=1)
-        if key.char == 'd':
+        elif key.char == 'd':
             mqttc.publish("mqtt/control", "INCREASE_SPEED", qos=1)
+        elif key == Key.right:
+            #mv_gimbal x 0 
+            mqttc.publish("mqtt/control", "RIGHT_GIMBAL", qos=1)
+        elif key == Key.left:
+            #mv_gimbal -x 0
+            mqttc.publish("mqtt/control", "LEFT_GIMBAL", qos=1)
+        elif key == Key.up:
+            #mv_gimbal 0 x
+            mqttc.publish("mqtt/control", "UP_GIMBAL", qos=1)
+        elif key == Key.down:
+            #mv_gimbal 0 -x
+            mqttc.publish("mqtt/control", "DOWN_GIMBAL", qos=1)
+        elif key == Key.shift_r:
+            # center_gimbal
+            mqttc.publish("mqtt/control", "CENTER_GIMBAL", qos=1)
     except AttributeError:
         pass  # Special keys (like shift) won't have .char
 

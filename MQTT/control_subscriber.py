@@ -10,6 +10,7 @@ print(BIN_PATH)
 MQTT_SERVER = "argus.paris.inria.fr" #specify the broker address
 MQTT_PATH = "mqtt/control" #this is the name of topic
 speed = 30
+angle = 75 # defautl angle move for the gimbal, 7.5 degrees
 def heartbeat_loop():
     
     subprocess.Popen([BIN_PATH + './send_heartbeat'],shell=True)
@@ -45,8 +46,17 @@ def on_message(client, userdata, msg):
         
     elif command == 'DECREASE_SPEED':
         speed -= 10
+    elif command == 'RIGHT_GIMBAL':
+        subprocess.Popen([BIN_PATH + './mv_gimbal {} 0'.format(angle)],shell=True)
+    elif command == 'LEFT_GIMBAL':
+        subprocess.Popen([BIN_PATH + './mv_gimbal -{} 0'.format(angle)],shell=True)
+    elif command == 'UP_GIMBAL':
+        subprocess.Popen([BIN_PATH + './mv_gimbal 0 {}'.format(angle)],shell=True)
+    elif command == 'DOWN_GIMBAL':
+        subprocess.Popen([BIN_PATH + './mv_gimbal 0 -{}'.format(angle)],shell=True)
+    elif command == 'CENTER_GIMBAL':
+        subprocess.Popen([BIN_PATH + './center_gimbal'],shell=True)
     else:
-        
         pass
 
  
