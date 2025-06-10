@@ -23,6 +23,6 @@ while True:
     # Convert to bytes and publish
     client.publish(topic, buffer.tobytes())
 
-    time.sleep(0.1)  
+    time.sleep(1/30)  
 cap.release()
 client.disconnect()
