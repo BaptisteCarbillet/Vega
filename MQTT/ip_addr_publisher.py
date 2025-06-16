@@ -7,7 +7,8 @@ def on_publish(client, userdata, mid, reason_code, properties):
     try:
         userdata.remove(mid)
     except KeyError:
-        print('Error')
+        print('IP adress not published yet, retrying...')
+        pass
         
 
 
@@ -39,6 +40,7 @@ ack_client.loop_start()
 
 while not received:
     try:
+        
         mqttc.publish("mqtt/ip_addr",  ip_addr, qos=1)
         
     except Exception as e:
