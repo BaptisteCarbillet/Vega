@@ -207,9 +207,9 @@ and
 
  > cd $HOME/Vega/
 
- > chmod + x can.sh
+ > chmod +x can.sh
 
- > chmod + x startup.sh
+ > chmod +x startup.sh
 
 
  The file startup.sh set up on start up of the raspberry pie the can socket and the MQTT subscriber.
@@ -237,6 +237,11 @@ You are now ready to control the Robomaster :
 On a remote machine, just launch the control_publisher.py file :
 
 > python MQTT/control_publisher.py
+
+
+If a webcam is plugged onto the raspberry pie, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
+
+> python RTSPsub.py
 
 ### Commands :
 
