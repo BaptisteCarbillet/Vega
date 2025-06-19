@@ -14,7 +14,7 @@ It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 
 | Component  | 
 | ------------- | 
-| Raspberry Pie 4 Model B  | 
+| Raspberry Pi 4 Model B  | 
 | Memory microSD Card  | 
 | RS485 CAN HAT  | 
 | DC/DC converter  | 
@@ -59,7 +59,7 @@ The choice of the resistor depends on the DC/DC converter ; the Rapsberry Pi wor
 ![show text ](/img/wiringSchema.png)
 
 
-### Step 1 : Connect the raspberry pie and the RS485 CAN HAT
+### Step 1 : Connect the Raspberry Pi and the RS485 CAN HAT
 
 ![show text ](/img/step1.png)
 
@@ -127,7 +127,7 @@ First check if the switch is good by checking connectivity between its ends
 
 
 
-## Set up the Raspberry pie and the Waveshare RS485 CAN HAT
+## Set up the Raspberry Pi and the Waveshare RS485 CAN HAT
 
 RS485 documentation [RS485 CAN HAT - Waveshare Wiki](https://www.waveshare.com/wiki/RS485_CAN_HAT)
 
@@ -196,10 +196,10 @@ and
  ## Controlling the RoboMaster
 
 
- In the MQTT folder the control_publisher.py is used from a remote machine to send command to the raspberry pie to control the robot.
+ In the MQTT folder the control_publisher.py is used from a remote machine to send command to the Raspberry Pi to control the robot.
 
 
- ### Setting up the MQTT subscriber ob the Raspberry pie
+ ### Setting up the MQTT subscriber ob the Raspberry Pi
 
  Both of the files can.sh and startup.sh should be executable
 
@@ -207,12 +207,12 @@ and
 
  > cd $HOME/Vega/
 
- > chmod + x can.sh
+ > chmod +x can.sh
 
- > chmod + x startup.sh
+ > chmod +x startup.sh
 
 
- The file startup.sh set up on start up of the raspberry pie the can socket and the MQTT subscriber.
+ The file startup.sh set up on start up of the Raspberry Pi the can socket and the MQTT subscriber, and the publisher of the IP adress of the Raspberry Pi.
 
  To make it launch on start up do :
 
@@ -225,18 +225,26 @@ and
 
  The file control_vel.cpp send an arbitrary speed command to the wheel of the RoboMaster.
 
- Before controlling the robot, compile it on the raspberry pie : 
+ Before controlling the robot, compile it on the Raspberry Pi : 
 
 > cd VEGA/robomaster_sdk_can
 
 > g++ -Iinc control_vel.cpp inc/*.hpp -o mv_wheel
 
+> g++ -Iinc control_gimbal.cpp inc/*.hpp -o mv_gimbal
+
+> g++ -Iinc stop_wheel.cpp inc/*.hpp -o stop_wheel
 
 You are now ready to control the Robomaster :
 
 On a remote machine, just launch the control_publisher.py file :
 
 > python MQTT/control_publisher.py
+
+
+If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
+
+> python RTSPsub.py
 
 ### Commands :
 
@@ -253,3 +261,13 @@ On a remote machine, just launch the control_publisher.py file :
 * r : it rotates to the left
 
 * s : it makes the robot stop
+
+* z : center the gimbal
+
+* i : move gimbal up
+
+* k : move gimbal down
+
+* j : move gimbal left
+
+* l : move gimbal right
