@@ -212,7 +212,7 @@ and
  > chmod +x startup.sh
 
 
- The file startup.sh set up on start up of the Raspberry Pi the can socket and the MQTT subscriber.
+ The file startup.sh set up on start up of the Raspberry Pi the can socket and the MQTT subscriber, and the publisher of the IP adress of the Raspberry Pi.
 
  To make it launch on start up do :
 
@@ -240,7 +240,7 @@ On a remote machine, just launch the control_publisher.py file :
 > python MQTT/control_publisher.py
 
 
-If a webcam is plugged onto the raspberry pie, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
+If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
 
 > python RTSPsub.py
 
