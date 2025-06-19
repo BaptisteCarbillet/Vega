@@ -1,36 +1,48 @@
 import paho.mqtt.client as mqtt
 import time
+import numpy as np
 from collections import deque
 
 MQTT_SERVER = "argus.paris.inria.fr"  # specify the broker address
 MQTT_PATH = "mqtt/latency"  # this is the name of topic
 
-client_pub = mqtt.Client()
+client = mqtt.Client()
+client.connect(MQTT_SERVER)
+
 client_ack = mqtt.Client()
-client_pub.connect(MQTT_SERVER + "_ping")
-client_ack.connect(MQTT_SERVER + "_pong")
+client_ack.connect(MQTT_SERVER)
+client_ack.subscribe(MQTT_PATH + "_ack")
 
-timestamp_queue = deque(maxlen=10000)  
+
+current_time = time.time()
 latency_list = []
-def on_message_ack(client, userdata, msg):
-    received_time = time.time()
-    latency = received_time - timestamp_queue.pop()
+msg_count = 0
+
+
+def on_message(client, userdata, msg):
+    global current_time
+    global latency_list
+    global msg_count
+    latency = time.time() - current_time
     latency_list.append(latency)
+    msg_count += 1
+    
+    if msg_count < 10000:
+        current_time = time.time()  # Update the current time for the next message
+        client.publish(MQTT_PATH, '')
+    else:
+        print("Received 10000 messages, stopping...")
+        client_ack.loop_stop()
+
+client_ack.on_message = on_message
+client_ack.subscribe(MQTT_PATH + "_ack")
 
 
+client.publish(MQTT_PATH, '')  # Initial message to start the loop
 
-client_ack.on_message = on_message_ack
-client_ack.subscribe(MQTT_PATH + "_pong")
-client_ack.loop_forever()
 
-sent_msg = 0
-while True:
-    timestamp = time.time()
-    timestamp_queue.append(timestamp)
-    client_pub.publish(MQTT_PATH + "_ping", timestamp)
-    time.sleep(0.1)  # Adjust the sleep time as needed for your application
-    sent_msg += 1
-    if sent_msg == 10000:
-        print("Average latency over last 10000 messages: ", sum(latency_list) / len(latency_list))
-        sent_msg = 0
-        latency_list.clear()
+client_ack.loop_start()
+time.sleep(30)  # Wait for some time to collect messages
+
+print('length of latency_list:', len(latency_list))
+print("Average latency :  {} seconds".format(np.mean(latency_list)))
