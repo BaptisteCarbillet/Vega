@@ -14,7 +14,7 @@ It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 
 | Component  | 
 | ------------- | 
-| Raspberry Pie 4 Model B  | 
+| Raspberry Pi 4 Model B  | 
 | Memory microSD Card  | 
 | RS485 CAN HAT  | 
 | DC/DC converter  | 
@@ -165,7 +165,7 @@ Go to section Interface Options → SPI and select Yes to enable the SPI interfa
 
 ### Step 3 : Waveshare RS485 CAN HAT installation
 
-First physically attach the Waveshare RS485/CAN hat to the 40-pin GPIO connector on the Raspberry PI.
+First physically attach the Waveshare RS485/CAN hat to the 40-pin GPIO connector on the Raspberry Pi.
  A properly installed Waveshare RS485/CAN hat looks like this 
 
  ![Alt Text](/img/RS485.png)
@@ -196,10 +196,10 @@ and
  ## Controlling the RoboMaster
 
 
- In the MQTT folder the control_publisher.py is used from a remote machine to send command to the raspberry pie to control the robot.
+ In the MQTT folder the control_publisher.py is used from a remote machine to send command to the Raspberry Pi to control the robot.
 
 
- ### Setting up the MQTT subscriber ob the Raspberry pie
+ ### Setting up the MQTT subscriber ob the Raspberry Pi
 
  Both of the files can.sh and startup.sh should be executable
 
@@ -212,7 +212,7 @@ and
  > chmod +x startup.sh
 
 
- The file startup.sh set up on start up of the raspberry pie the can socket and the MQTT subscriber.
+ The file startup.sh set up on start up of the Raspberry Pi the can socket and the MQTT subscriber.
 
  To make it launch on start up do :
 
@@ -225,7 +225,7 @@ and
 
  The file control_vel.cpp send an arbitrary speed command to the wheel of the RoboMaster.
 
- Before controlling the robot, compile it on the raspberry pie : 
+ Before controlling the robot, compile it on the Raspberry Pi : 
 
 > cd VEGA/robomaster_sdk_can
 
@@ -239,7 +239,7 @@ On a remote machine, just launch the control_publisher.py file :
 > python MQTT/control_publisher.py
 
 
-If a webcam is plugged onto the raspberry pie, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
+If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
 
 > python RTSPsub.py
 
