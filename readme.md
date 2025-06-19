@@ -59,7 +59,7 @@ The choice of the resistor depends on the DC/DC converter ; the Rapsberry Pi wor
 ![show text ](/img/wiringSchema.png)
 
 
-### Step 1 : Connect the raspberry pie and the RS485 CAN HAT
+### Step 1 : Connect the Raspberry Pi and the RS485 CAN HAT
 
 ![show text ](/img/step1.png)
 
@@ -127,7 +127,7 @@ First check if the switch is good by checking connectivity between its ends
 
 
 
-## Set up the Raspberry pie and the Waveshare RS485 CAN HAT
+## Set up the Raspberry Pi and the Waveshare RS485 CAN HAT
 
 RS485 documentation [RS485 CAN HAT - Waveshare Wiki](https://www.waveshare.com/wiki/RS485_CAN_HAT)
 
@@ -165,7 +165,7 @@ Go to section Interface Options → SPI and select Yes to enable the SPI interfa
 
 ### Step 3 : Waveshare RS485 CAN HAT installation
 
-First physically attach the Waveshare RS485/CAN hat to the 40-pin GPIO connector on the Raspberry Pi.
+First physically attach the Waveshare RS485/CAN hat to the 40-pin GPIO connector on the Raspberry PI.
  A properly installed Waveshare RS485/CAN hat looks like this 
 
  ![Alt Text](/img/RS485.png)
@@ -230,7 +230,8 @@ and
 > cd VEGA/robomaster_sdk_can
 
 > g++ -Iinc control_vel.cpp inc/*.hpp -o mv_wheel
-
+> g++ -Iinc control_gimbal.cpp inc/*.hpp -o mv_gimbal
+> g++ -Iinc stop_wheel.cpp inc/*.hpp -o stop_wheel
 
 You are now ready to control the Robomaster :
 
@@ -239,7 +240,7 @@ On a remote machine, just launch the control_publisher.py file :
 > python MQTT/control_publisher.py
 
 
-If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
+If a webcam is plugged onto the raspberry pie, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
 
 > python RTSPsub.py
 
@@ -258,3 +259,13 @@ If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido s
 * r : it rotates to the left
 
 * s : it makes the robot stop
+
+* z : center the gimbal
+
+* i : move gimbal up
+
+* k : move gimbal down
+
+* j : move gimbal left
+
+* l : move gimbal right
