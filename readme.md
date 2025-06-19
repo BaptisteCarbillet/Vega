@@ -230,7 +230,9 @@ and
 > cd VEGA/robomaster_sdk_can
 
 > g++ -Iinc control_vel.cpp inc/*.hpp -o mv_wheel
+
 > g++ -Iinc control_gimbal.cpp inc/*.hpp -o mv_gimbal
+
 > g++ -Iinc stop_wheel.cpp inc/*.hpp -o stop_wheel
 
 You are now ready to control the Robomaster :
