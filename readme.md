@@ -58,7 +58,7 @@ This setup allows us to implement our own control logic directly over the intern
 
 | Component | Role|
 | ------------- | ------------- |
-| Wire cutter  | Cut rhe wires  |
+| Wire cutter  | Cut the wires  |
 | Crimper  | Crimp the wires  |
 | Wire stripper  | Remove insulation of the wires and crip the spade connector  |
 
