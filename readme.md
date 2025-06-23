@@ -1,13 +1,26 @@
 # VEGA
 
 
-This repository contains code to program and control the DJI RoboMaster S1.
+This repository provides code to program and control the DJI RoboMaster S1 after replacing its internal controller with a Raspberry Pi and a CAN HAT. 
+
+Communication with the robot is handled via the CAN bus protocol, with additional support for MQTT-based messaging to enable remote monitoring and control.
 
 NB : the robomaster_sdk_can folder is directly taken from the GitHub of  [proroklab](https://github.com/proroklab/robomaster_sdk_can/tree/main)
 
 It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 
-## Materials needed
+## RoboMaster after Hardware changes
+
+
+![img_2173](https://github.com/user-attachments/assets/1275495f-d557-4b7a-a4c1-1f76f6d052bd)
+
+## The hardware changes of the RoboMaster
+ We replaced the internal controller of the RoboMaster S1 with a Raspberry Pi and a CAN HAT to gain low-level control over the robot.
+The original controller relies on high-level programming interfaces that limit flexibility and customization.                
+This setup allows us to implement our own control logic directly over the internal CAN bus.
+
+
+##  Hardware setup
 
 ### Components
 
@@ -20,6 +33,7 @@ It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 | DC/DC converter  | 
 | Resistor  | 
 | Switch  | 
+| Camera | 
 
 
 ### Wiring 
@@ -45,7 +59,7 @@ It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
 
 | Component | Role|
 | ------------- | ------------- |
-| Wire cutter  | Cut rhe wires  |
+| Wire cutter  | Cut the wires  |
 | Crimper  | Crimp the wires  |
 | Wire stripper  | Remove insulation of the wires and crip the spade connector  |
 
@@ -90,6 +104,8 @@ Solder the 12V lines coming in from the RoboMaster to the left side of the DC/DC
 * Use the voltage generator to apply the 12V to the DC/DC converter and then check attach the multimeter on the second red wire to see if there's 5V
 
 ### Step 5 : Apply heat shrink tubing to the converter to protect the soldering
+![image](https://github.com/user-attachments/assets/9fb5a590-e6f9-4d15-a690-d9a5b488eb57)
+
 
 ### Step 6 : Crimp the ends of the wires 1,2
 
@@ -97,7 +113,7 @@ Solder the 12V lines coming in from the RoboMaster to the left side of the DC/DC
 
 ### Step 7 : Remove the insulation from the red wires 7 and 4
 
-Remove approximately 6.5mm of insulation
+Remove approximately 6.5 mm of insulation
 
 ![show text ](/img/step8.png)
 
@@ -125,6 +141,7 @@ First check if the switch is good by checking connectivity between its ends
 
 ![show text ](/img/finalResult.png)
 
+You should also connect a USB camera to the Raspberry Pi, since the original RoboMaster camera  does not use USB-C so it is not compatible
 
 
 ## Set up the Raspberry Pi and the Waveshare RS485 CAN HAT
@@ -196,10 +213,10 @@ and
  ## Controlling the RoboMaster
 
 
- In the MQTT folder the control_publisher.py is used from a remote machine to send command to the Raspberry Pi to control the robot.
+ In the MQTT folder the control_publisher.py is used from a remote machine to send commands to the Raspberry Pi to control the robot.
 
 
- ### Setting up the MQTT subscriber ob the Raspberry Pi
+ ### Setting up the MQTT subscriber on the Raspberry Pi
 
  Both of the files can.sh and startup.sh should be executable
 
@@ -212,8 +229,7 @@ and
  > chmod +x startup.sh
 
 
- The file startup.sh set up on start up of the Raspberry Pi the can socket and the MQTT subscriber, and the publisher of the IP adress of the Raspberry Pi.
-
+The startup.sh script is executed on boot and sets up the CAN socket, starts the MQTT subscriber, and publishes the Raspberry Pi’s IP address.
  To make it launch on start up do :
 
  > crontab -e
@@ -222,8 +238,7 @@ and
  
  > @reboot sleep 10; $HOME/Vega/startup.sh
 
-
- The file control_vel.cpp send an arbitrary speed command to the wheel of the RoboMaster.
+ The file control_vel.cpp sends an arbitrary speed command to the wheel of the RoboMaster.
 
  Before controlling the robot, compile it on the Raspberry Pi : 
 
@@ -244,7 +259,9 @@ On a remote machine, just launch the control_publisher.py file :
 
 If a webcam is plugged onto the Raspberry Pi, you can get a (almost) live vido stream feedback from the webcam by running the RTSPsub.py file :
 
-> python RTSPsub.py
+> python RTSPsub.py 
+
+and Press q to take a picture
 
 ### Commands :
 
