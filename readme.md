@@ -3,7 +3,8 @@
 
 This repository provides code to program and control the DJI RoboMaster S1 after replacing its internal controller with a Raspberry Pi and a CAN HAT. 
 
-Communication with the robot is handled via the CAN bus protocol, with additional support for MQTT-based messaging to enable remote monitoring and control
+Communication with the robot is handled via the CAN bus protocol, with additional support for MQTT-based messaging to enable remote monitoring and control.
+
 NB : the robomaster_sdk_can folder is directly taken from the GitHub of  [proroklab](https://github.com/proroklab/robomaster_sdk_can/tree/main)
 
 It was developped by [Jan Blumenkamp](https://www.cst.cam.ac.uk/people/jb2270)
