@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 
-
+import time
 class FrameProcessor:
 
     def __init__(self, frame):
@@ -40,17 +40,22 @@ class PIDcontroller:
         self.setpoint = setpoint
         self.previous_error = 0.0
         self.integral = 0.0
+        self.cap = cv2.VideoCapture(0)
+        
 
-    def get_frame(self):
-        cap = cv2.VideoCapture(0)
-        if not cap.isOpened():
-            raise Exception("Could not open video device")
-        ret, frame = cap.read()
-        cap.release()
+    def get_measurement(self):
+        t0 = time.time()
+        #cap = cv2.VideoCapture(0)
+        #if not cap.isOpened():
+        #        raise Exception("Could not open video device")
+        ret, frame = self.cap.read()
+        
         frame = cv2.resize(frame, (640, 480))
 
         self.frame = FrameProcessor(frame)
-        
+        self.measurement = self.frame.get_angle() if self.frame.lines is not None else -1
+        t1 = time.time()
+        print(f"Frame processing time: {t1 - t0:.4f} seconds")
 
     def compute(self, measurement):
         error = self.setpoint - measurement
@@ -62,3 +67,9 @@ class PIDcontroller:
         self.previous_error = error
         
         return output
+    
+    
+controller = PIDcontroller(kp=1.0, ki=0.1, kd=0.05, setpoint=0.0)
+while True:
+    controller.get_measurement()
+    
