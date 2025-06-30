@@ -1,8 +1,14 @@
 import cv2
 import numpy as np
-
-
+import subprocess
+import os 
 import time
+import subprocess
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BIN_PATH = os.path.join(SCRIPT_DIR, '../robomaster_sdk_can/')
+
+print(BIN_PATH)
 class FrameProcessor:
 
     def __init__(self, frame):
@@ -41,10 +47,12 @@ class PIDcontroller:
         self.previous_error = 0.0
         self.integral = 0.0
         self.cap = cv2.VideoCapture(0)
-        
+    
 
     def get_measurement(self):
         t0 = time.time()
+        subprocess.Popen([BIN_PATH + './center_gimbal'], shell=True)
+        subprocess.Popen([BIN_PATH + './mv_ginmbal -150 0'], shell=True)
         #cap = cv2.VideoCapture(0)
         #if not cap.isOpened():
         #        raise Exception("Could not open video device")
