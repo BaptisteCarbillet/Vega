@@ -183,7 +183,7 @@ robot = Robot(publish=True)
 robot.center_gimbal()
 #Ku : 0.00115
 #Tu : 0.372
-controller = PIDcontroller(kp_y=0.0006, ki_y=0.000, kd_y=0, kp_omega=2, ki_omega=0, kd_omega=0, setpoint_angular=0.0, setpoint_horizontal=320)
+controller = PIDcontroller(kp_y=0.0006, ki_y=0.000, kd_y=0, kp_omega=2.3, ki_omega=0, kd_omega=0, setpoint_angular=0.0, setpoint_horizontal=320)
 
 
 while True:
