@@ -3,14 +3,15 @@ import os
 import time
 import threading
 import subprocess
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BIN_PATH = os.path.join(SCRIPT_DIR, '../robomaster_sdk_can/')
+from robomaster_sdk_can.robot import Robot
 
-print(BIN_PATH)
 MQTT_SERVER = "argus.paris.inria.fr" #specify the broker address
-MQTT_PATH = "mqtt/control" #this is the name of topic
+MQTT_TOPIC = "mqtt/control" #this is the name of topic
 speed = 30
 angle = 75 # defautl angle move for the gimbal, 7.5 degrees
+
+robot = Robot()
+
 def heartbeat_loop():
     
     subprocess.Popen([BIN_PATH + './send_heartbeat'],shell=True)
@@ -18,8 +19,8 @@ def heartbeat_loop():
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
-    client.subscribe(MQTT_PATH)
-    os.system(BIN_PATH + './center_gimbal')
+    client.subscribe(MQTT_TOPIC)
+    robot.center_gimbal()
 
  
 
@@ -28,34 +29,47 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     command = msg.payload.decode('utf-8')
     if command == 'STOP':
-        subprocess.Popen([BIN_PATH + './stop_wheel'],shell=True)
+        robot.stop_robot()
+    
     elif command == 'FORWARD':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} {} {} {}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(speed, speed, speed, speed)
+    
     elif command == 'BACKWARD':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} -{} -{} -{}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(-speed, -speed, -speed, -speed)
+        
     elif command == 'RIGHT':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} -{} {}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(-speed, speed, -speed, speed)
+        
     elif command == 'LEFT':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} {} -{}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(speed, -speed, speed, -speed)
+    
     elif command == 'ROTATION_RIGHT':
-        subprocess.Popen([BIN_PATH + './mv_wheel -{} {} {} -{}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(-speed, speed, speed, -speed)
+        
     elif command == 'ROTATION_LEFT':
-        subprocess.Popen([BIN_PATH + './mv_wheel {} -{} -{} {}'.format(speed,speed,speed,speed)],shell=True)
+        robot.move_wheel(speed, -speed, -speed, speed)
+    
     elif command == 'INCREASE_SPEED':
         speed += 10
         
     elif command == 'DECREASE_SPEED':
         speed -= 10
+    
     elif command == 'RIGHT_GIMBAL':
-        subprocess.Popen([BIN_PATH + './mv_gimbal {} 0'.format(angle)],shell=True)
+        robot.move_gimbal(angle, 0)
+    
     elif command == 'LEFT_GIMBAL':
-        subprocess.Popen([BIN_PATH + './mv_gimbal -{} 0'.format(angle)],shell=True)
+        robot.move_gimbal(-angle, 0)
+    
     elif command == 'UP_GIMBAL':
-        subprocess.Popen([BIN_PATH + './mv_gimbal 0 {}'.format(angle)],shell=True)
+        robot.move_gimbal(0, angle)
+    
     elif command == 'DOWN_GIMBAL':
-        subprocess.Popen([BIN_PATH + './mv_gimbal 0 -{}'.format(angle)],shell=True)
+        robot.move_gimbal(0, -angle)
+
     elif command == 'CENTER_GIMBAL':
-        subprocess.Popen([BIN_PATH + './center_gimbal'],shell=True)
+        robot.center_gimbal()
+    
     else:
         pass
 
@@ -65,8 +79,8 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.connect(MQTT_SERVER)
 
-heartbeat_thread = threading.Thread(target=heartbeat_loop,daemon=True)
-heartbeat_thread.start()
+#heartbeat_thread = threading.Thread(target=heartbeat_loop,daemon=True)
+#heartbeat_thread.start()
 
 
 client.loop_forever()
