@@ -31,11 +31,6 @@ class FrameProcessor:
         _, self.reduced_frame = cv2.threshold(self.reduced_frame, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
         self.contours, _ = cv2.findContours(self.reduced_frame, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         
-        #erosion and dilation to remove noise
-        kernel = np.ones((5, 5), np.uint8)
-        self.reduced_frame = cv2.erode(self.reduced_frame, kernel, iterations=5)
-        self.reduced_frame = cv2.dilate(self.reduced_frame, kernel, iterations=5)
-
     def compute_angles(self):
 
         ### This function compute the angle between the line and the vertical axis for control
